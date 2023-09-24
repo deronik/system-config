@@ -1,0 +1,51 @@
+set nocompatible              " be iMproved, required
+filetype off                  " required
+
+" set the runtime path to include Vundle and initialize
+let g:ycm_clangd_binary_path = trim(system('brew --prefix llvm')).'/bin/clangd'
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'tpope/vim-fugitive'
+Plugin 'git://git.wincent.com/command-t.git'
+Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
+Plugin 'scrooloose/nerdtree'
+Plugin 'ycm-core/YouCompleteMe'
+Plugin 'flebel/vim-mypy'
+Plugin 'vim-syntastic/syntastic'
+Plugin 'nvie/vim-flake8'
+Plugin 'psf/black'
+Plugin 'deronik/vim-hfcc'
+call vundle#end()            " required
+filetype plugin indent on    " required
+
+
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
+set expandtab
+set relativenumber nu
+let python_highlight_all=1
+syntax on
+colorscheme desert
+set colorcolumn=88
+highlight ColorColumn ctermbg=gray
+let g:syntastic_python_checkers = ['flake8','mypy']
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_aggregate_errors = 1
+" You CompleteMe Declaration
+let g:ycm_confirm_extra_conf = 0
+let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
+nnoremap <S-E> :NERDTreeToggle<CR>
+nnoremap <S-Tab> :bn <CR>
+nnoremap <Leader>gd :YcmCompleter GoToDefinition<CR>
+" Black string normalization disable
+let g:black_skip_string_normalization = 1
+nnoremap <C-s> :w!<CR>
+autocmd FileType python nnoremap <C-s> :Black<CR> :w!<CR>
+" hide current buffer if have changes instead of try close
+:set hidden
+:set backspace=indent,eol,start
+source ~/.vimsecrets
